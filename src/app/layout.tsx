@@ -6,7 +6,7 @@ import { Toaster } from 'sonner'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Hebrew Alphabet Flip Card',
+  title: 'Alef Tav',
   description: 'Learn the hebrew alphabet'
 }
 

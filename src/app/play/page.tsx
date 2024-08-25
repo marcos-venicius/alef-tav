@@ -28,11 +28,13 @@ export default function Play() {
     function (letter: LetterDefinition) {
       const endTime = Date.now()
 
+      const letterIndex = alphabet[currentLetterIndex].index
+
       if (letter.letter !== alphabet[currentLetterIndex].letter) {
         setErrors(state => {
           const updated = new Set(state)
 
-          updated.add(letter.index)
+          updated.add(letterIndex)
 
           return updated
         })
@@ -41,13 +43,11 @@ export default function Play() {
         return
       }
 
-      toast.success('Right answer')
-
-      if (!errors.has(letter.index)) {
+      if (!errors.has(letterIndex)) {
         setSuccess(state => {
           const updated = new Set(state)
 
-          updated.add(letter.index)
+          updated.add(letterIndex)
 
           return updated
         })

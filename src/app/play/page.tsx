@@ -63,7 +63,7 @@ export default function Play() {
 
       router.push(`/results?time=${time}&errors=${errorsList}&success=${successList}`)
     },
-    [currentLetterIndex, alphabet, startTime, errors, success]
+    [alphabet, currentLetterIndex, errors, startTime, success, router]
   )
 
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function Play() {
             <Button key={option.letter} variant='secondary' onClick={submit.bind(null, option)} className='relative'>
               {option.name}
 
-              <span className='absolute text-xs text-zinc-500 -bottom-2 -right-1'>{index + 1}</span>
+              <span className='absolute text-xs text-zinc-500 -bottom-2 -right-1 pointer-events-none'>{index + 1}</span>
             </Button>
           ))}
         </div>

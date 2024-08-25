@@ -17,6 +17,8 @@ const frank = Frank_Ruhl_Libre({
   subsets: ['hebrew']
 })
 
+// TODO: - do some tests
+//       - separate in another file
 function formatDuration(milliseconds: number): string {
   const totalSeconds = Math.floor(milliseconds / 1000)
   const minutes = Math.floor(totalSeconds / 60)
@@ -39,6 +41,8 @@ function formatDuration(milliseconds: number): string {
   return result
 }
 
+// TODO: - do some tests
+//       - separate in another file
 function params(sp: Props['searchParams']) {
   if (sp?.time === undefined) return redirect('/', RedirectType.replace)
   if (sp?.errors === undefined) return redirect('/', RedirectType.replace)
@@ -50,7 +54,10 @@ function params(sp: Props['searchParams']) {
 
   if (Number.isNaN(time)) return redirect('/', RedirectType.replace)
 
-  for (const index of sp.errors.split(',')) {
+  const errorIndexes = sp.errors.split(',').filter(x => !!x)
+  const successIndexes = sp.success.split(',').filter(x => !!x)
+
+  for (const index of errorIndexes) {
     const n = Number(index)
 
     if (Number.isNaN(n) || n < 0 || n > letters.length - 1) return redirect('/', RedirectType.replace)
@@ -58,7 +65,7 @@ function params(sp: Props['searchParams']) {
     errors.push(letters[n])
   }
 
-  for (const index of sp.success.split(',')) {
+  for (const index of successIndexes) {
     const n = Number(index)
 
     if (Number.isNaN(n) || n < 0 || n > letters.length - 1) return redirect('/', RedirectType.replace)
@@ -101,6 +108,12 @@ export default function Results({ searchParams }: Props) {
           </div>
         )}
 
+        {success.length === 0 && (
+          <p dir='rtl' className='text-sm text-zinc-500 mt-5'>
+            You don&apos;t have any right answers
+          </p>
+        )}
+
         <h2 className='text-slate-800 font-bold text-5xl mt-10' dir='rtl'>
           Wrong answers
         </h2>
@@ -115,6 +128,12 @@ export default function Results({ searchParams }: Props) {
               </p>
             ))}
           </div>
+        )}
+
+        {errors.length === 0 && (
+          <p dir='rtl' className='text-sm text-zinc-500 mt-5'>
+            You don&apos;t have any wrong answers
+          </p>
         )}
 
         <Link href='/' className='block w-fit ml-auto mt-10'>

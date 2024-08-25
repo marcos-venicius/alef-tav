@@ -32,7 +32,7 @@ export default function Play() {
         setErrors(state => {
           const updated = new Set(state)
 
-          updated.add(currentLetterIndex)
+          updated.add(letter.index)
 
           return updated
         })
@@ -43,13 +43,15 @@ export default function Play() {
 
       toast.success('Right answer')
 
-      setSuccess(state => {
-        const updated = new Set(state)
+      if (!errors.has(letter.index)) {
+        setSuccess(state => {
+          const updated = new Set(state)
 
-        updated.add(currentLetterIndex)
+          updated.add(letter.index)
 
-        return updated
-      })
+          return updated
+        })
+      }
 
       if (currentLetterIndex < alphabet.length - 1) {
         return setCurrentLetterIndex(state => state + 1)

@@ -1,3 +1,5 @@
+import { shuffleArray } from './lib/utils'
+
 export type LetterDefinition = {
   name: string
   song: string
@@ -169,9 +171,5 @@ export const letters: Array<LetterDefinition> = [
 ]
 
 export function getLettersShuffled(): Array<LetterDefinition> {
-  return letters
-    .map(letter => ({ letter, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ letter }) => letter)
+  return shuffleArray(letters)
 }
-

@@ -78,12 +78,18 @@ export default function Results({ searchParams }: Props) {
 
   return (
     <main className='w-full h-full p-5 flex gap-5 flex-col items-center justify-center'>
-      <section className='w-full max-w-5xl' dir='rtl'>
-        <h2 className='text-slate-800 font-bold text-5xl'>Time</h2>
+      <section className='w-full max-w-5xl'>
+        <h2 className='text-slate-800 font-bold text-5xl' dir='rtl'>
+          Time
+        </h2>
 
-        <p className='text-slate-800 font-bold mt-5'>{time}</p>
+        <p className='text-slate-800 font-bold mt-5' dir='rtl'>
+          {time}
+        </p>
 
-        <h2 className='text-slate-800 font-bold text-5xl mt-10'>Right answers</h2>
+        <h2 className='text-slate-800 font-bold text-5xl mt-10' dir='rtl'>
+          Right answers
+        </h2>
 
         {success.length > 0 && (
           <div className='mt-5 flex items-center flex-wrap gap-5' dir='rtl'>
@@ -95,7 +101,9 @@ export default function Results({ searchParams }: Props) {
           </div>
         )}
 
-        <h2 className='text-slate-800 font-bold text-5xl mt-10'>Wrong answers</h2>
+        <h2 className='text-slate-800 font-bold text-5xl mt-10' dir='rtl'>
+          Wrong answers
+        </h2>
 
         {errors.length > 0 && (
           <div className='flex items-center flex-wrap gap-5 mt-5' dir='rtl'>
@@ -109,7 +117,7 @@ export default function Results({ searchParams }: Props) {
           </div>
         )}
 
-        <Link href='/' className='block mt-10'>
+        <Link href='/' className='block w-fit ml-auto mt-10'>
           <Button>Play again</Button>
         </Link>
       </section>

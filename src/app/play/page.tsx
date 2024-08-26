@@ -2,10 +2,12 @@
 
 import { Frank_Ruhl_Libre } from 'next/font/google'
 import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
+import { ProgressBar } from '~/components/progress-bar'
 import { Tooltip } from '~/components/tooltip'
 import { Button } from '~/components/ui/button'
+import { useIsMobile } from '~/hooks/is-mobile'
 import { LetterDefinition, getLettersShuffled } from '~/letters'
 import { cn, shuffleArray } from '~/lib/utils'
 
@@ -21,6 +23,9 @@ export default function Play() {
   const alphabet = useMemo(() => getLettersShuffled(), [])
 
   const router = useRouter()
+  const isMobile = useIsMobile()
+
+  const progressBar = useRef<ProgressBar>(null)
 
   const currentLetter = alphabet[currentLetterIndex]
 
@@ -41,6 +46,10 @@ export default function Play() {
 
         toast.error('Wrong answer')
         return
+      }
+
+      if (progressBar.current) {
+        progressBar.current.updateCurrent(state => state + 1)
       }
 
       if (!errors.has(letterIndex)) {
@@ -89,6 +98,8 @@ export default function Play() {
   }, [currentLetterIndex, alphabet])
 
   useEffect(() => {
+    if (isMobile) return
+
     const keys = new Array(options.length).fill(0).map((_, i) => i + 1)
 
     function handleEvent(event: KeyboardEvent) {
@@ -106,10 +117,12 @@ export default function Play() {
     return () => {
       window.removeEventListener('keydown', handleEvent)
     }
-  }, [options, submit])
+  }, [options, isMobile, submit])
 
   return (
     <main className='w-full h-full flex items-center justify-center'>
+      <ProgressBar ref={progressBar} max={alphabet.length} current={0} />
+
       <div className='flex flex-col items-center'>
         <Tooltip hint={currentLetter.song}>
           <h1 className={cn(hebrewFont.className, 'text-6xl select-none pointer-events-none')}>
@@ -124,7 +137,11 @@ export default function Play() {
             <Button key={option.letter} variant='secondary' onClick={submit.bind(null, option)} className='relative'>
               {option.name}
 
-              <span className='absolute text-xs text-zinc-500 -bottom-2 -right-1 pointer-events-none'>{index + 1}</span>
+              {!isMobile && (
+                <span className='absolute text-xs text-zinc-500 -bottom-2 -right-1 pointer-events-none'>
+                  {index + 1}
+                </span>
+              )}
             </Button>
           ))}
         </div>

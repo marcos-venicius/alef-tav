@@ -202,6 +202,9 @@ export const letters: Array<LetterDefinition> = [
   }
 ]
 
-export function getLettersShuffled(): Array<LetterDefinition> {
+export function getLetters(shuffled: boolean): Array<LetterDefinition> {
+  console.log(shuffled)
+  if (!shuffled) return letters
+
   return shuffleArray(letters)
 }

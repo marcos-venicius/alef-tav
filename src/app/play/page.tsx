@@ -8,19 +8,25 @@ import { ProgressBar } from '~/components/progress-bar'
 import { Tooltip } from '~/components/tooltip'
 import { Button } from '~/components/ui/button'
 import { useIsMobile } from '~/hooks/is-mobile'
-import { LetterDefinition, getLettersShuffled } from '~/letters'
-import { cn, shuffleArray } from '~/lib/utils'
+import { LetterDefinition, getLetters } from '~/letters'
+import { cn, isTrue, shuffleArray } from '~/lib/utils'
 
 const hebrewFont = Frank_Ruhl_Libre({ subsets: ['hebrew'] })
 
-export default function Play() {
+type Props = {
+  searchParams: {
+    shuffled?: string
+  }
+}
+
+export default function Play({ searchParams }: Props) {
   const [errors, setErrors] = useState<Set<number>>(new Set())
   const [success, setSuccess] = useState<Set<number>>(new Set())
   const [currentLetterIndex, setCurrentLetterIndex] = useState<number>(0)
   const [options, setOptions] = useState<Array<LetterDefinition>>([])
 
   const startTime = useMemo(() => Date.now(), [])
-  const alphabet = useMemo(() => getLettersShuffled(), [])
+  const alphabet = useMemo(() => getLetters(isTrue(searchParams?.shuffled)), [searchParams])
 
   const router = useRouter()
   const isMobile = useIsMobile()

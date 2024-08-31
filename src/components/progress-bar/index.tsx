@@ -25,9 +25,9 @@ export const ProgressBar = React.forwardRef<ProgressBar, Props>(function Compone
   )
 
   return (
-    <div className='fixed top-0 left-0 right-0 w-screen h-5 bg-slate-100'>
+    <div className='fixed top-0 left-0 right-0 w-screen h-5 bg-sky-100'>
       <div
-        className='h-5 bg-blue-600 transition-all'
+        className='h-5 bg-sky-600 transition-all'
         style={{
           width: `${width}%`
         }}

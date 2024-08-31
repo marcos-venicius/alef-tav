@@ -86,22 +86,22 @@ export default function Results({ searchParams }: Props) {
   return (
     <main className='w-full h-full p-5 flex gap-5 flex-col items-center justify-center'>
       <section className='w-full max-w-5xl'>
-        <h2 className='text-slate-800 font-bold text-5xl' dir='rtl'>
+        <h2 className='text-sky-900 font-bold text-5xl' dir='rtl'>
           Time
         </h2>
 
-        <p className='text-slate-800 font-bold mt-5' dir='rtl'>
+        <p className='text-sky-800 font-bold mt-5' dir='rtl'>
           {time}
         </p>
 
-        <h2 className='text-slate-800 font-bold text-5xl mt-10' dir='rtl'>
+        <h2 className='text-sky-900 font-bold text-5xl mt-10' dir='rtl'>
           Right answers
         </h2>
 
         {success.length > 0 && (
           <div className='mt-5 flex items-center flex-wrap gap-5' dir='rtl'>
             {success.map(letter => (
-              <p key={letter.letter} className={cn('text-6xl select-none pointer-events-none', frank.className)}>
+              <p key={letter.letter} className={cn('text-6xl text-sky-800 select-none pointer-events-none', frank.className)}>
                 {letter.letter}
               </p>
             ))}
@@ -109,12 +109,12 @@ export default function Results({ searchParams }: Props) {
         )}
 
         {success.length === 0 && (
-          <p dir='rtl' className='text-sm text-zinc-500 mt-5'>
+          <p dir='rtl' className='text-sm text-sky-500 mt-5'>
             You don&apos;t have any right answers
           </p>
         )}
 
-        <h2 className='text-slate-800 font-bold text-5xl mt-10' dir='rtl'>
+        <h2 className='text-sky-900 font-bold text-5xl mt-10' dir='rtl'>
           Wrong answers
         </h2>
 
@@ -123,7 +123,7 @@ export default function Results({ searchParams }: Props) {
             {errors.map(letter => (
               <p
                 key={letter.letter}
-                className={cn('text-6xl select-none pointer-events-none transition-all', frank.className)}>
+                className={cn('text-6xl text-sky-800 select-none pointer-events-none transition-all', frank.className)}>
                 {letter.letter}
               </p>
             ))}
@@ -131,13 +131,13 @@ export default function Results({ searchParams }: Props) {
         )}
 
         {errors.length === 0 && (
-          <p dir='rtl' className='text-sm text-zinc-500 mt-5'>
+          <p dir='rtl' className='text-sm text-sky-500 mt-5'>
             You don&apos;t have any wrong answers
           </p>
         )}
 
         <Link href='/' className='block w-fit ml-auto mt-10'>
-          <Button>Play again</Button>
+          <Button variant="tertiary">Play again</Button>
         </Link>
       </section>
     </main>

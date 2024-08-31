@@ -9,24 +9,18 @@ import { Tooltip } from '~/components/tooltip'
 import { Button } from '~/components/ui/button'
 import { useIsMobile } from '~/hooks/is-mobile'
 import { LetterDefinition, getLetters } from '~/letters'
-import { cn, isTrue, shuffleArray } from '~/lib/utils'
+import { cn, shuffleArray } from '~/lib/utils'
 
 const hebrewFont = Frank_Ruhl_Libre({ subsets: ['hebrew'] })
 
-type Props = {
-  searchParams: {
-    shuffled?: string
-  }
-}
-
-export default function Play({ searchParams }: Props) {
+export default function Play() {
   const [errors, setErrors] = useState<Set<number>>(new Set())
   const [success, setSuccess] = useState<Set<number>>(new Set())
   const [currentLetterIndex, setCurrentLetterIndex] = useState<number>(0)
   const [options, setOptions] = useState<Array<LetterDefinition>>([])
 
   const startTime = useMemo(() => Date.now(), [])
-  const alphabet = useMemo(() => getLetters(isTrue(searchParams?.shuffled)), [searchParams])
+  const alphabet = useMemo(() => getLetters(true), [])
 
   const router = useRouter()
   const isMobile = useIsMobile()
@@ -76,7 +70,7 @@ export default function Play({ searchParams }: Props) {
       const errorsList = Array.from(errors).join(',')
       const successList = Array.from(success).join(',')
 
-      router.push(`/results?time=${time}&errors=${errorsList}&success=${successList}`)
+      router.push(`/play/learn-letters/results?time=${time}&errors=${errorsList}&success=${successList}`)
     },
     [alphabet, currentLetterIndex, errors, startTime, success, router]
   )
@@ -131,7 +125,7 @@ export default function Play({ searchParams }: Props) {
 
       <div className='flex flex-col items-center'>
         <Tooltip hint={currentLetter.song}>
-          <h1 className={cn(hebrewFont.className, 'text-6xl select-none pointer-events-none')}>
+          <h1 className={cn(hebrewFont.className, 'text-sky-900 text-6xl select-none pointer-events-none')}>
             {currentLetter.letter}
           </h1>
         </Tooltip>
@@ -140,13 +134,15 @@ export default function Play({ searchParams }: Props) {
 
         <div className='mt-10 flex flex-wrap gap-5'>
           {options.map((option, index) => (
-            <Button key={option.letter} variant='secondary' onClick={submit.bind(null, option)} className='relative'>
+            <Button
+              key={option.letter}
+              variant='tertiary'
+              onClick={submit.bind(null, option)}
+              className='block relative w-28 text-left'>
               {option.name}
 
               {!isMobile && (
-                <span className='absolute text-xs text-zinc-500 -bottom-2 -right-1 pointer-events-none'>
-                  {index + 1}
-                </span>
+                <span className='absolute text-xs text-sky-900 bottom-1 right-2 pointer-events-none'>{index + 1}</span>
               )}
             </Button>
           ))}

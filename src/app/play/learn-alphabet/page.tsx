@@ -2,7 +2,7 @@
 
 import { Frank_Ruhl_Libre } from 'next/font/google'
 import { useRouter } from 'next/navigation'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { alphabet } from '~/alphabet'
 import { ProgressBar } from '~/components/progress-bar'
@@ -25,8 +25,8 @@ export default function LearnAlphabet() {
   const [errors, setErrors] = useState<Set<number>>(new Set())
   const [success, setSuccess] = useState<Set<number>>(new Set())
   const [currentLetterIndex, setCurrentLetterIndex] = useState<number>(0)
+  const [startTime, setStartTime] = useState(0)
 
-  const startTime = useMemo(() => Date.now(), [])
   const isMobile = useIsMobile()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -95,6 +95,10 @@ export default function LearnAlphabet() {
 
     router.push(`/play/learn-alphabet/results?time=${time}&errors=${errorsList}&success=${successList}`)
   }
+
+  useEffect(() => {
+    setStartTime(Date.now())
+  }, [])
 
   return (
     <main className='w-full h-full flex items-center justify-center'>

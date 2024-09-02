@@ -18,8 +18,8 @@ export default function Play() {
   const [success, setSuccess] = useState<Set<number>>(new Set())
   const [currentLetterIndex, setCurrentLetterIndex] = useState<number>(0)
   const [options, setOptions] = useState<Array<LetterDefinition>>([])
+  const [startTime, setStartTime] = useState(0)
 
-  const startTime = useMemo(() => Date.now(), [])
   const alphabet = useMemo(() => getLetters(true), [])
 
   const router = useRouter()
@@ -118,6 +118,10 @@ export default function Play() {
       window.removeEventListener('keydown', handleEvent)
     }
   }, [options, isMobile, submit])
+
+  useEffect(() => {
+    setStartTime(Date.now())
+  }, [])
 
   return (
     <main className='w-full h-full flex items-center justify-center'>
